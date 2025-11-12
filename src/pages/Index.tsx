@@ -1,58 +1,101 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceModal from "@/components/ServiceModal";
+import Navigation from "@/components/Navigation";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedService, setSelectedService] = useState({ name: "", icon: "" });
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const services = [
     {
       icon: "🤖",
       title: "Discord Bots",
-      description: "Custom Discord bot development tailored to your server's needs",
+      description: "Custom bot development with advanced features and seamless integration",
     },
     {
       icon: "🌐",
       title: "Web Tools",
-      description: "Custom web applications and platforms built for your business",
+      description: "Full-stack web applications built with modern frameworks and best practices",
     },
     {
       icon: "🧩",
       title: "Browser Extensions",
-      description: "Chrome, Firefox, and Edge extensions with custom functionality",
+      description: "Cross-browser extensions with powerful functionality and clean interfaces",
     },
     {
       icon: "⚙️",
       title: "Automations",
-      description: "Workflow automation systems to save time and streamline processes",
+      description: "Workflow automation systems that save time and eliminate repetitive tasks",
     },
     {
       icon: "🧾",
       title: "Quick Fixes",
-      description: "Fast bug fixes and urgent patches — 24-48 hour turnaround",
+      description: "Rapid bug fixes and patches delivered in 24-48 hours when you need them most",
     },
     {
       icon: "🧠",
       title: "AI Integrations",
-      description: "AI-powered features using GPT, Claude, and other platforms",
+      description: "Cutting-edge AI features powered by GPT-4, Claude, and custom models",
     },
     {
       icon: "📈",
       title: "Data Systems",
-      description: "Database management, analytics, and data visualization platforms",
+      description: "Scalable databases, analytics platforms, and data visualization dashboards",
     },
     {
       icon: "💳",
       title: "Payment Systems",
-      description: "Secure payment processing integration for your platform",
+      description: "Secure payment processing with Stripe, PayPal, and cryptocurrency support",
     },
   ];
 
-  const handleServiceClick = (serviceName: string) => {
-    setSelectedService(serviceName);
+  const steps = [
+    {
+      number: "01",
+      title: "Choose Service",
+      description: "Browse our catalog and select what you need",
+    },
+    {
+      number: "02",
+      title: "Contact on Discord",
+      description: "DM me to discuss your project requirements",
+    },
+    {
+      number: "03",
+      title: "Get Custom Quote",
+      description: "Receive a tailored price based on your needs",
+    },
+    {
+      number: "04",
+      title: "Approve & Pay",
+      description: "Complete payment via CashApp once approved",
+    },
+    {
+      number: "05",
+      title: "Send Confirmation",
+      description: "DM payment screenshot for verification",
+    },
+    {
+      number: "06",
+      title: "Project Begins",
+      description: "Work starts immediately after confirmation",
+    },
+  ];
+
+  const handleServiceClick = (serviceName: string, serviceIcon: string) => {
+    setSelectedService({ name: serviceName, icon: serviceIcon });
     setModalOpen(true);
   };
 
@@ -65,63 +108,100 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black text-white">
+      <Navigation />
+
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-accent rounded-full blur-3xl animate-glow-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-muted rounded-full blur-3xl animate-glow-pulse" style={{ animationDelay: "1s" }} />
+      <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+        {/* Animated geometric background with parallax */}
+        <div 
+          className="absolute inset-0 opacity-30"
+          style={{
+            transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`,
+            transition: "transform 0.1s ease-out",
+          }}
+        >
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float" />
+          <div 
+            className="absolute bottom-1/4 right-1/4 w-[32rem] h-[32rem] bg-white/5 rounded-full blur-3xl animate-float" 
+            style={{ animationDelay: "2s" }} 
+          />
+          <div 
+            className="absolute top-1/2 left-1/2 w-64 h-64 bg-white/5 rounded-full blur-3xl animate-float" 
+            style={{ animationDelay: "4s" }} 
+          />
         </div>
 
-        <div className="relative z-10 text-center max-w-5xl mx-auto animate-fade-in">
-          {/* Logo Placeholder */}
-          <div className="mb-8 inline-block">
-            <div className="w-24 h-24 bg-accent rounded-lg flex items-center justify-center text-4xl font-bold glow-effect">
+        <div className="relative z-10 text-center max-w-6xl mx-auto">
+          {/* Logo */}
+          <div className="mb-12 inline-block animate-fade-in">
+            <div className="w-32 h-32 bg-white/10 rounded-2xl flex items-center justify-center text-5xl font-black border-2 border-white/20 glow-effect">
               DS
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            Professional Technology Solutions
+          {/* Main headline with gradient shimmer */}
+          <h1 
+            className="text-7xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tight animate-fade-in"
+            style={{ animationDelay: "0.2s" }}
+          >
+            <span className="text-gradient text-gradient-animate">
+              DRAUNTS SERVICES™
+            </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto">
-            Custom Discord Bots • Web Tools • Automations • AI Integration
+          {/* Subheading */}
+          <p 
+            className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 animate-fade-in"
+            style={{ animationDelay: "0.4s" }}
+          >
+            Professional Technology Solutions Built for Excellence
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* Services line with dividers */}
+          <div 
+            className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-gray-400 text-sm md:text-base lg:text-lg mb-16 animate-fade-in"
+            style={{ animationDelay: "0.6s" }}
+          >
+            <span>Discord Bots</span>
+            <span className="text-white/20">•</span>
+            <span>Web Tools</span>
+            <span className="text-white/20">•</span>
+            <span>AI Integration</span>
+            <span className="text-white/20">•</span>
+            <span>Automations</span>
+          </div>
+
+          {/* CTA Button */}
+          <div 
+            className="animate-fade-in"
+            style={{ animationDelay: "0.8s" }}
+          >
             <Button 
               size="lg" 
               onClick={scrollToServices}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 glow-effect"
+              className="bg-white text-black hover:bg-white/90 text-xl px-12 py-8 font-bold glow-effect-strong animate-glow-pulse transition-all duration-300 hover:scale-105"
             >
-              View Services
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="secondary"
-              onClick={scrollToContact}
-              className="text-lg px-8 py-6"
-            >
-              Contact Us
+              Explore Services
+              <ArrowRight className="ml-3 h-6 w-6" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-24 px-4">
+      <section id="services" className="py-32 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Services</h2>
-            <p className="text-xl text-muted-foreground">
-              Professional solutions tailored to your needs
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6">
+              Premium Services
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
+              Professional solutions tailored to your exact requirements
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {services.map((service, index) => (
               <div 
                 key={index} 
@@ -132,7 +212,7 @@ const Index = () => {
                   icon={service.icon}
                   title={service.title}
                   description={service.description}
-                  onClick={() => handleServiceClick(service.title)}
+                  onClick={() => handleServiceClick(service.title, service.icon)}
                 />
               </div>
             ))}
@@ -141,110 +221,96 @@ const Index = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 px-4 bg-surface">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">How It Works</h2>
-            <p className="text-xl text-muted-foreground">
+      <section className="py-32 px-6 bg-white/[0.02]">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6">
+              How It Works
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-400">
               Simple process from start to finish
             </p>
           </div>
 
-          <div className="space-y-8">
-            {[
-              {
-                step: "1",
-                title: "Choose Your Service",
-                description: "Select the service you need from our catalog",
-              },
-              {
-                step: "2",
-                title: "DM on Discord",
-                description: "Contact me on Discord to discuss your needs",
-              },
-              {
-                step: "3",
-                title: "Get Quote",
-                description: "I'll provide a custom price quote for your project",
-              },
-              {
-                step: "4",
-                title: "Make Payment",
-                description: "Pay via CashApp once you approve the quote",
-              },
-              {
-                step: "5",
-                title: "Send Confirmation",
-                description: "DM me the payment screenshot on Discord",
-              },
-              {
-                step: "6",
-                title: "Project Starts",
-                description: "I'll begin working on your project immediately",
-              },
-            ].map((item, index) => (
-              <div 
-                key={index}
-                className="flex gap-6 items-start animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-accent flex items-center justify-center text-xl font-bold glow-effect">
-                  {item.step}
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-white/20 via-white/10 to-transparent" />
+
+            <div className="space-y-16">
+              {steps.map((step, index) => (
+                <div 
+                  key={index}
+                  className={`flex flex-col md:flex-row gap-8 items-center animate-fade-in-up ${
+                    index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                  }`}
+                  style={{ animationDelay: `${index * 0.15}s` }}
+                >
+                  <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
+                    <div className="card-premium border-glow rounded-2xl p-8 inline-block">
+                      <div className="text-6xl md:text-8xl font-black text-gradient mb-4">
+                        {step.number}
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-bold mb-3">{step.title}</h3>
+                      <p className="text-gray-400 text-lg">{step.description}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex-shrink-0 w-16 h-16 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center glow-effect z-10">
+                    <div className="w-3 h-3 rounded-full bg-white" />
+                  </div>
+                  
+                  <div className="flex-1 md:block hidden" />
                 </div>
-                <div className="pt-2">
-                  <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground text-lg">{item.description}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Get Started Today</h2>
-          <p className="text-xl text-muted-foreground mb-8">
-            DM me first before making any payments
-          </p>
+      <section id="contact" className="py-32 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-8">
+            Ready to Start?
+          </h2>
           
-          <div className="bg-card border border-border rounded-lg p-8 mb-8 glow-effect">
-            <div className="text-2xl font-mono mb-2">YourDiscord#0000</div>
-            <p className="text-muted-foreground mb-6">
-              Payment processed after quote approval via CashApp
+          <div className="card-premium border-glow rounded-3xl p-12 mb-8 glow-effect">
+            <div className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
+              YourDiscord#0000
+            </div>
+            <p className="text-gray-400 text-lg mb-8">
+              Payment processed after quote approval • No upfront fees • Response within 24 hours
             </p>
             
             <Button 
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 glow-effect"
-              onClick={() => window.open("https://discord.com", "_blank")}
+              className="bg-white text-black hover:bg-white/90 text-xl px-16 py-8 font-black glow-effect-strong animate-glow-pulse transition-all duration-300 hover:scale-105"
+              onClick={scrollToContact}
             >
-              Contact Me on Discord
-              <ExternalLink className="ml-2 h-5 w-5" />
+              Message Me on Discord
+              <ExternalLink className="ml-3 h-6 w-6" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-12 px-4 bg-surface">
+      <footer className="border-t border-white/10 py-12 px-6 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
             <div className="text-center md:text-left">
-              <div className="font-bold text-xl mb-2">Draunts Services™</div>
-              <p className="text-muted-foreground">Professional Technology Solutions</p>
+              <div className="font-black text-2xl mb-2">DRAUNTS SERVICES™</div>
+              <p className="text-gray-400">Professional Technology Solutions</p>
             </div>
             
-            <div className="flex gap-6 text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">Discord</a>
-              <a href="#" className="hover:text-foreground transition-colors">CashApp</a>
-              <a href="#" className="hover:text-foreground transition-colors">Terms</a>
-              <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
+            <div className="flex gap-8 text-gray-400">
+              <a href="#" className="hover:text-white transition-colors font-medium">Discord</a>
+              <a href="#" className="hover:text-white transition-colors font-medium">Terms</a>
+              <a href="#" className="hover:text-white transition-colors font-medium">Privacy</a>
             </div>
           </div>
           
-          <div className="text-center mt-8 text-muted-foreground">
+          <div className="text-center text-gray-400 text-sm">
             © 2025 Draunts Services™. All rights reserved.
           </div>
         </div>
@@ -253,7 +319,8 @@ const Index = () => {
       <ServiceModal 
         open={modalOpen}
         onOpenChange={setModalOpen}
-        serviceName={selectedService}
+        serviceName={selectedService.name}
+        serviceIcon={selectedService.icon}
       />
     </div>
   );
