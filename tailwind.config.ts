@@ -59,6 +59,10 @@ export default {
         },
         surface: "hsl(var(--surface))",
         "surface-elevated": "hsl(var(--surface-elevated))",
+        "contact-bg": "hsl(var(--contact-bg))",
+        "text-secondary": "hsl(var(--text-secondary))",
+        "text-tertiary": "hsl(var(--text-tertiary))",
+        "accent-dark": "hsl(var(--accent-dark))",
       },
       borderRadius: {
         lg: "var(--radius)",
