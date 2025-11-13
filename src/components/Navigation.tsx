@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.png";
 
 const Navigation = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,6 +14,18 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const scrollToServices = () => {
+    document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToProcess = () => {
+    document.getElementById("process")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -25,21 +38,55 @@ const Navigation = () => {
           : "-translate-y-full opacity-0"
       }`}
     >
-      <div className="bg-black/80 backdrop-blur-xl border-b border-white/10">
+      <div className="bg-black/90 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-sm font-bold glow-effect">
-              DS
-            </div>
-            <span className="font-bold text-lg">DRAUNTS SERVICES™</span>
-          </div>
-          
-          <Button
-            onClick={scrollToContact}
-            className="bg-white text-black hover:bg-white/90 font-semibold transition-all duration-300 hover:scale-105 glow-effect-hover"
+          <button 
+            onClick={scrollToTop}
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            Contact
-          </Button>
+            <img 
+              src={logo} 
+              alt="Draunts Services" 
+              className="w-10 h-10 object-contain"
+            />
+            <span className="font-bold text-lg hidden sm:inline">DRAUNTS SERVICES™</span>
+          </button>
+          
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-6 text-sm">
+              <button 
+                onClick={scrollToServices}
+                className="text-text-secondary hover:text-white transition-colors relative group"
+              >
+                Services
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
+              </button>
+              <span className="text-white/20">•</span>
+              <button 
+                onClick={scrollToProcess}
+                className="text-text-secondary hover:text-white transition-colors relative group"
+              >
+                Process
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
+              </button>
+              <span className="text-white/20">•</span>
+              <button 
+                onClick={scrollToContact}
+                className="text-text-secondary hover:text-white transition-colors relative group"
+              >
+                Contact
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
+              </button>
+            </div>
+            
+            <Button
+              onClick={scrollToContact}
+              className="bg-white text-black hover:bg-white/90 font-semibold transition-all duration-300 hover:scale-105"
+              style={{ width: "140px", height: "42px" }}
+            >
+              Get Quote
+            </Button>
+          </div>
         </div>
       </div>
     </nav>

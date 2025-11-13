@@ -7,7 +7,7 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 
 const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState({ name: "", icon: "" });
+  const [selectedService, setSelectedService] = useState({ name: "", icon: "", description: "" });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -94,8 +94,8 @@ const Index = () => {
     },
   ];
 
-  const handleServiceClick = (serviceName: string, serviceIcon: string) => {
-    setSelectedService({ name: serviceName, icon: serviceIcon });
+  const handleServiceClick = (serviceName: string, serviceIcon: string, serviceDescription: string) => {
+    setSelectedService({ name: serviceName, icon: serviceIcon, description: serviceDescription });
     setModalOpen(true);
   };
 
@@ -212,7 +212,7 @@ const Index = () => {
                   icon={service.icon}
                   title={service.title}
                   description={service.description}
-                  onClick={() => handleServiceClick(service.title, service.icon)}
+                  onClick={() => handleServiceClick(service.title, service.icon, service.description)}
                 />
               </div>
             ))}
@@ -321,6 +321,7 @@ const Index = () => {
         onOpenChange={setModalOpen}
         serviceName={selectedService.name}
         serviceIcon={selectedService.icon}
+        serviceDescription={selectedService.description}
       />
     </div>
   );
