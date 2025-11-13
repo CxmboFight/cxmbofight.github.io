@@ -23,7 +23,7 @@ const Navigation = () => {
   };
 
   const scrollToProcess = () => {
-    document.getElementById("process")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const scrollToContact = () => {
@@ -42,14 +42,14 @@ const Navigation = () => {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <button 
             onClick={scrollToTop}
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            className="flex items-center gap-3 hover:opacity-80 transition-all duration-300"
           >
             <img 
               src={logo} 
               alt="Draunts Services" 
-              className="w-10 h-10 object-contain"
+              className="w-12 h-12 object-contain filter brightness-100 hover:brightness-110 transition-all duration-300"
             />
-            <span className="font-bold text-lg hidden sm:inline">DRAUNTS SERVICES™</span>
+            <span className="font-bold text-xl hidden sm:inline tracking-tight">DRAUNTS SERVICES™</span>
           </button>
           
           <div className="flex items-center gap-6">

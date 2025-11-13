@@ -18,13 +18,13 @@ interface ServiceModalProps {
 
 const ServiceModal = ({ open, onOpenChange, serviceName, serviceIcon, serviceDescription }: ServiceModalProps) => {
   const handleDiscordContact = () => {
-    window.open("https://discord.com", "_blank");
+    window.open("https://discord.com/users/draunts", "_blank");
   };
 
   const steps = [
     { 
       text: "Contact on Discord", 
-      detail: "Send me a DM at 'draunts' explaining your project needs, technical requirements, and timeline" 
+      detail: "Send me a DM at 'draunts' (Discord username: draunts) explaining your project needs, technical requirements, and timeline" 
     },
     { 
       text: "Receive Custom Quote", 

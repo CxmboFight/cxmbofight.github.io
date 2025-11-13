@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceModal from "@/components/ServiceModal";
 import Navigation from "@/components/Navigation";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowRight, ExternalLink, Copy, Check } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState({ name: "", icon: "", description: "" });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [copiedDiscord, setCopiedDiscord] = useState(false);
+  const [copiedCashApp, setCopiedCashApp] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -107,6 +110,17 @@ const Index = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const copyToClipboard = (text: string, type: 'discord' | 'cashapp') => {
+    navigator.clipboard.writeText(text);
+    if (type === 'discord') {
+      setCopiedDiscord(true);
+      setTimeout(() => setCopiedDiscord(false), 2000);
+    } else {
+      setCopiedCashApp(true);
+      setTimeout(() => setCopiedCashApp(false), 2000);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Navigation />
@@ -135,8 +149,12 @@ const Index = () => {
         <div className="relative z-10 text-center max-w-6xl mx-auto">
           {/* Logo */}
           <div className="mb-12 inline-block animate-fade-in">
-            <div className="w-32 h-32 bg-white/10 rounded-2xl flex items-center justify-center text-5xl font-black border-2 border-white/20 glow-effect">
-              DS
+            <div className="w-40 h-40 bg-white/5 rounded-3xl flex items-center justify-center border-2 border-white/20 glow-effect backdrop-blur-xl p-4">
+              <img 
+                src={logo} 
+                alt="Draunts Services" 
+                className="w-full h-full object-contain filter brightness-110"
+              />
             </div>
           </div>
 
@@ -221,7 +239,7 @@ const Index = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-32 px-6 bg-white/[0.02]">
+      <section id="how-it-works" className="py-32 px-6 bg-white/[0.02]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6">
@@ -275,17 +293,56 @@ const Index = () => {
           </h2>
           
           <div className="card-premium border-glow rounded-3xl p-12 mb-8 glow-effect">
-            <div className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
-              YourDiscord#0000
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="text-3xl md:text-4xl font-bold text-gradient">
+                draunts
+              </div>
+              <button
+                onClick={() => copyToClipboard('draunts', 'discord')}
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                title="Copy Discord username"
+              >
+                {copiedDiscord ? (
+                  <Check className="h-5 w-5 text-green-400" />
+                ) : (
+                  <Copy className="h-5 w-5 text-gray-400" />
+                )}
+              </button>
             </div>
-            <p className="text-gray-400 text-lg mb-8">
-              Payment processed after quote approval • No upfront fees • Response within 24 hours
+            
+            <p className="text-gray-400 text-base mb-4">
+              Payment Method: <span className="text-white font-semibold">CashApp Only</span>
+            </p>
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <a 
+                href="https://cash.app/$Sympxthetics101" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-lg text-accent hover:text-white transition-colors font-mono"
+              >
+                cash.app/$Sympxthetics101
+              </a>
+              <button
+                onClick={() => copyToClipboard('https://cash.app/$Sympxthetics101', 'cashapp')}
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                title="Copy CashApp link"
+              >
+                {copiedCashApp ? (
+                  <Check className="h-5 w-5 text-green-400" />
+                ) : (
+                  <Copy className="h-5 w-5 text-gray-400" />
+                )}
+              </button>
+            </div>
+            
+            <p className="text-gray-400 text-sm mb-8">
+              💳 Payments accepted via CashApp only • 📱 Response within 12 hours • 🔒 Secure & confidential
             </p>
             
             <Button 
               size="lg"
-              className="bg-white text-black hover:bg-white/90 text-xl px-16 py-8 font-black glow-effect-strong animate-glow-pulse transition-all duration-300 hover:scale-105"
-              onClick={scrollToContact}
+              className="bg-white text-black hover:bg-white/90 text-xl px-16 py-8 font-black glow-effect-strong animate-glow-pulse transition-all duration-300 hover:scale-105 mb-4"
+              onClick={() => window.open('https://discord.com/users/draunts', '_blank')}
             >
               Message Me on Discord
               <ExternalLink className="ml-3 h-6 w-6" />
@@ -304,14 +361,17 @@ const Index = () => {
             </div>
             
             <div className="flex gap-8 text-gray-400">
-              <a href="#" className="hover:text-white transition-colors font-medium">Discord</a>
+              <button onClick={() => window.open('https://discord.com/users/draunts', '_blank')} className="hover:text-white transition-colors font-medium">Discord: draunts</button>
+              <a href="https://cash.app/$Sympxthetics101" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors font-medium">CashApp: $Sympxthetics101</a>
               <a href="#" className="hover:text-white transition-colors font-medium">Terms</a>
               <a href="#" className="hover:text-white transition-colors font-medium">Privacy</a>
             </div>
           </div>
           
-          <div className="text-center text-gray-400 text-sm">
-            © 2025 Draunts Services™. All rights reserved.
+          <div className="text-center text-gray-400 text-sm space-y-2">
+            <div>© 2025 Draunts Services™ • Professional Technology Solutions</div>
+            <div className="text-xs">Est. 2022 • Trusted by clients worldwide</div>
+            <div className="text-xs">All payments processed via CashApp only • Response time: 12-24 hours</div>
           </div>
         </div>
       </footer>
